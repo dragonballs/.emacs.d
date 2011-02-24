@@ -492,10 +492,6 @@ Sometimes useful for getting help on R or Emacs.
   ;; minimize fringe
   (setq-default indicate-empty-lines nil)
   
-  ;; Add keybindings for commenting regions of text
-  (global-set-key (kbd "C-c ;") 'comment-or-uncomment-region)
-  (global-set-key (kbd "M-'") 'comment-or-uncomment-region)
-  
   ;; Base dir
   (cd "~/")
 
@@ -503,21 +499,7 @@ Sometimes useful for getting help on R or Emacs.
   (setq stack-trace-on-error nil)
   (require 'cedet)
   (require 'ecb)
-  
-  ;; custom variables kludge. Why can't I get these to work via setq?
-  (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
-  '(LaTeX-XeTeX-command "xelatex -synctex=1")
-  '(TeX-engine (quote xetex))
-  '(TeX-view-program-list (quote (("Skim" "/Applications/Skim.app/Contents/SharedSupport/displayline %n %o %b"))))
-  '(TeX-view-program-selection (quote (((output-dvi style-pstricks) "dvips and gv") (output-dvi "xdvi") (output-pdf "Skim") (output-html "xdg-open"))))
-  '(show-paren-mode t)
-  '(blink-cursor-mode nil)
-  '(text-mode-hook (quote (text-mode-hook-identify)))
-  )
+
 #+end_src
    
    
