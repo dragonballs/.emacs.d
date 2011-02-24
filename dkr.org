@@ -18,6 +18,26 @@ You will also need to change the values for the location of bibtex
  simply comment out the lines.
 
 ** Miscellaneous Settings and starter-kit overrides
+*** Mac Specific
+#+srcname: mac-specific
+#+begin_src emacs-lisp
+;; some configuration about mac window mode
+(when (eq window-system 'ns)
+  (set-frame-parameter (selected-frame) 'alpha '(95 50))
+  (add-to-list 'default-frame-alist '(alpha 95 50))
+
+  (setq mac-command-modifier 'control)
+  (setq mac-control-modifier 'meta)
+  (setq mac-option-modifier 'alt)
+
+  (set-frame-font "Menlo-24")
+  (set-fontset-font (frame-parameter nil 'font)
+		    'han '("STHeiti" . "unicode-bmp"))
+  (toggle-scroll-bar -1)
+
+  (global-set-key (kbd "C-h h") 'ns-do-hide-emacs)
+)
+#+end_src
 *** Window size
 #+srcname: window_size
 #+begin_src emacs-lisp :tangle no
@@ -43,7 +63,6 @@ You will also need to change the values for the location of bibtex
 #+begin_src emacs-lisp
    ;; Color Theme from vendor directory
    (require 'color-theme)
-   (color-theme-subtle-hacker)
    ;; Highlight current line (twilight theme builds in support for this)
    (global-hl-line-mode 1)
 #+end_src
@@ -313,22 +332,6 @@ When in an org-mode buffer, bind TeX-insert-quote to =C-c "=.
   (setq org-archive-location "~/Dropbox/Org/archive.org::From %s")
 #+end_src
 
-*** Local Org-mode Mobile Settings
-   Sync orgmode files with Dropbox and iPhone. 
-#+src-name: orgmode-mobile
-#+begin_src emacs-lisp
-   ;; Set to the location of your Org files on your local system
-   (setq org-directory "~/Dropbox/Org")
-   ;; Set to <your Dropbox root directory>/MobileOrg.
-   (setq org-mobile-directory "~/Dropbox/MobileOrg")
-   ;; Set to the files (or directory of files) you want sync'd
-   (setq org-agenda-files (quote ("~/Dropbox/Org")))
-   ;; Set to the name of the file where new notes will be stored
-   (setq org-mobile-inbox-for-pull "~/Dropbox/Org/from-mobile.org")
-   
-
-#+end_src
-
 *** Local Org-mode Babel Settings
    Configure org-mode so that when you edit source code in an indirect buffer (with C-c '), the buffer is opened in the current window. That way, your window organization isn't broken when switching.
 
@@ -497,30 +500,9 @@ Sometimes useful for getting help on R or Emacs.
   ;; Base dir
   (cd "~/")
 
-;; ibuffer
-(global-set-key (kbd "C-x C-l") 'ibuffer)
-(autoload 'ibuffer "ibuffer" "List buffers." t)
-
-;; ecb
-(require 'cedet)
-;;(require 'ecb)
-
-;; some configuration about mac window mode
-(when (eq window-system 'ns)
-  (set-frame-parameter (selected-frame) 'alpha '(95 50))
-  (add-to-list 'default-frame-alist '(alpha 95 50))
-
-  (setq mac-command-modifier 'control)
-  (setq mac-control-modifier 'meta)
-  (setq mac-option-modifier 'alt)
-
-  (set-frame-font "Menlo-24")
-  (set-fontset-font (frame-parameter nil 'font)
-		    'han '("STHeiti" . "unicode-bmp"))
-  (toggle-scroll-bar -1)
-
-  (global-set-key (kbd "C-h h") 'ns-do-hide-emacs)
-)
+  ;; ecb
+  (require 'cedet)
+  (require 'ecb)
   
   ;; custom variables kludge. Why can't I get these to work via setq?
   (custom-set-variables
