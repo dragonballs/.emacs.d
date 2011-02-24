@@ -64,7 +64,7 @@ You will also need to change the values for the location of bibtex
    ;; Color Theme from vendor directory
    (require 'color-theme)
    ;; Highlight current line (twilight theme builds in support for this)
-   (global-hl-line-mode 1)
+   ;; (global-hl-line-mode 1)
 #+end_src
 
 *** Run Emacs in Full Screen
@@ -86,8 +86,7 @@ patched emacs build at =git://github.com/typester/emacs.git=.
 
 #+source: fullscreen-2
 #+begin_src emacs-lisp
-;;  (global-set-key [(ctrl return)] 'ns-toggle-fullscreen)
-  (global-set-key (kbd "C-c m") 'ns-toggle-fullscreen)
+  (global-set-key [(ctrl return)] 'ns-toggle-fullscreen)
 #+end_src
 
 **** Option 3  
@@ -157,7 +156,7 @@ Internal to emacs; also seems not to work on OS X.
     Used with Mitsuharu Yamamoto's carbon-patched 23.1.94, which turns
     off support for default mac bindings. 
 #+srcname: mac-keys
-#+begin_src emacs-lisp tangle: no
+#+begin_src emacs-lisp :tangle no
    (setq mac-command-modifier 'alt mac-option-modifier 'meta)
    (require 'redo+)
    (require 'mac-key-mode)
@@ -501,6 +500,7 @@ Sometimes useful for getting help on R or Emacs.
   (cd "~/")
 
   ;; ecb
+  (setq stack-trace-on-error nil)
   (require 'cedet)
   (require 'ecb)
   

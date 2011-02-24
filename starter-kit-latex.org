@@ -135,6 +135,37 @@ Allow AucTeX to use biber as well as/instead of bibtex.
       (setenv "PATH" (concat "/usr/texbin:" (getenv "PATH")))
 #+end_src
 
+** Configure Sweave 
+#+srcname: config-sweave
+#+begin_src emacs-lisp
+  (setq TeX-file-extensions
+        '("Snw" "Rnw" "nw" "tex" "sty" "cls" "ltx" "texi" "texinfo"))
+  (add-to-list 'auto-mode-alist '("\\.Rnw\\'" . Rnw-mode))
+  (add-to-list 'auto-mode-alist '("\\.Snw\\'" . Snw-mode))
+  (add-hook 'Rnw-mode-hook
+   (lambda ()
+    (add-to-list 'TeX-expand-list '("%rnw" file "Rnw" t) t)
+    (add-to-list 'TeX-command-list
+     '("Stangle" "R CMD Stangle %rnw" 
+       TeX-run-command nil (latex-mode) :help "Run Stangle") t)
+    (add-to-list 'TeX-command-list
+     '("Sweave" "R CMD Sweave %rnw" 
+       TeX-run-command nil (latex-mode) :help "Run Sweave") t)
+    (add-to-list 'TeX-command-list
+     '("LatexSweave" "%l %(mode) %s"
+       TeX-run-TeX nil (latex-mode) :help "Run Latex after Sweave") t)
+    (add-to-list 'TeX-command-list
+     '("RubberSweave" "rubber -d %s && open '%s.pdf'" TeX-run-command nil t) t)
+  (setq TeX-command-default "Sweave")))
+  
+  ;; AucTeX with rubber
+  ;;http://www.nabble.com/sweave-and-auctex-td23492805.html
+  (eval-after-load "tex"
+    '(add-to-list 'TeX-command-list
+                  '("Rubber" "rubber -d %t && open '%s.pdf'"
+                    TeX-run-command nil t) t))
+#+end_src
+
 ** Configure RefTeX
 *** Default Bibliography
     - This is important when editing source code in Org-babel, since
