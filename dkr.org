@@ -77,7 +77,7 @@ patched emacs build at =git://github.com/typester/emacs.git=.
 
 #+source: fullscreen-2
 #+begin_src emacs-lisp
-  (global-set-key (kbd "C-return") 'ns-toggle-fullscreen)
+  (global-set-key [(ctrl return)] 'ns-toggle-fullscreen)
 #+end_src
 
 **** Option 3  
