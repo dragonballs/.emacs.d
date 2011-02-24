@@ -43,17 +43,7 @@ You will also need to change the values for the location of bibtex
 #+begin_src emacs-lisp
    ;; Color Theme from vendor directory
    (require 'color-theme)
-   (load-file
-   "~/.emacs.d/src/color-theme-themes/color-theme-twilight.el")
-   (load-file
-    "~/.emacs.d/src/color-theme-themes/zenburnish.el") 
-   (load-file
-   "~/.emacs.d/src/color-theme-themes/color-theme-tangosoft.el") 
-   (if window-system
-     (color-theme-zenburnish)   ;; Emacs started in own window
-     (color-theme-tangosoft) ;; Emacs started in tty
-     )
-   
+   (color-theme-subtle-hacker)
    ;; Highlight current line (twilight theme builds in support for this)
    (global-hl-line-mode 1)
 #+end_src
@@ -77,7 +67,8 @@ patched emacs build at =git://github.com/typester/emacs.git=.
 
 #+source: fullscreen-2
 #+begin_src emacs-lisp
-  (global-set-key [(ctrl return)] 'ns-toggle-fullscreen)
+;;  (global-set-key [(ctrl return)] 'ns-toggle-fullscreen)
+  (global-set-key (kbd "C-c m") 'ns-toggle-fullscreen)
 #+end_src
 
 **** Option 3  
@@ -478,57 +469,6 @@ Sometimes useful for getting help on R or Emacs.
                        '("irc.freenode.net"))
 #+end_src
 
-** ESS
-#+srcname: ess-custom
-#+begin_src emacs-lisp
-;; ess
-;; Use shift-enter to split window & launch R (if not running), execute highlighted
-;; region (if R running & area highlighted), or execute current line
-;; (and move to next line, skipping comments). Nice. 
-;; See http://www.emacswiki.org/emacs/EmacsSpeaksStatistics,
-;; FelipeCsaszar. Adapted to spilit vertically instead of
-;; horizontally. 
-;; Use shift-enter to split window & launch R (if not running), execute highlighted
-;; region (if R running & area highlighted), or execute current line
-;; (and move to next line, skipping comments). Nice. 
-;; See http://www.emacswiki.org/emacs/EmacsSpeaksStatistics,
-;; FelipeCsaszar. Adapted to spilit vertically instead of
-;; horizontally. 
-(setq ess-ask-for-ess-directory nil)
-(setq ess-local-process-name "R")
-(setq ansi-color-for-comint-mode 'filter)
-(setq comint-scroll-to-bottom-on-input t)
-(setq comint-scroll-to-bottom-on-output t)
-(setq comint-move-point-for-output t)
-(defun my-ess-start-R ()
-    (interactive)
-    (if (not (member "*R*" (mapcar (function buffer-name) (buffer-list))))
-      (progn
-	(delete-other-windows)
-	(setq w1 (selected-window))
-	(setq w1name (buffer-name))
-	(setq w2 (split-window w1 nil t))
-	(R)
-	(set-window-buffer w2 "*R*")
-	(set-window-buffer w1 w1name)
-	nil)
-      t))
-(defun my-ess-eval ()
-    (interactive)
-    (if (my-ess-start-R)
-	(if (and transient-mark-mode mark-active)
-	    (call-interactively 'ess-eval-region)
-	  (call-interactively 'ess-eval-line-and-step))))
-(add-hook 'ess-mode-hook
-	    '(lambda()
-	       (local-set-key [(shift return)] 'my-ess-eval)))
-(add-hook 'inferior-ess-mode-hook
-	    '(lambda()
-	       (local-set-key [C-up] 'comint-previous-input)
-	       (local-set-key [C-down] 'comint-next-input)))
-(require 'ess-site)
-#+end_src
-
 ** Maxima
 #+srcname: maxima-custom
 #+begin_src maxima-lisp
@@ -539,48 +479,6 @@ Sometimes useful for getting help on R or Emacs.
 (autoload 'maxima "maxima" "Maxima interaction" t)
 (autoload 'imath-mode "imath" "Imath mode for math formula input" t)
 (setq imaxima-use-maxima-mode-flag t)
-#+end_src
-
-** Keybindings
-#+srcname: keybinding-custom
-#+begin_src keybinding-lisp
-;;Set buffer switch key
-(global-set-key "\C-x\C-b" 'bs-show) ;;or 'electric-buffer-list
-(global-set-key "\M-p"  'bs-cycle-previous)
-(global-set-key "\M-n"  'bs-cycle-next)
-(global-set-key "\C-x\C-d"  'find-dired)
-(global-set-key "\C-x\C-r"  'find-grep)
-(global-set-key "\C-x\C-h" 'hexl-mode)
-(global-set-key "\C-x\C-o" 'occur)
-(global-set-key "\C-z" 'set-mark-command)
-(global-set-key "\M-r" 'eval-region)
-
-(global-set-key [(f1)] 'vi-mode)
-(global-set-key [(f2)] 'gnus)
-(global-set-key [(f3)] 'calendar)
-(global-set-key [(f4)] 'calculator)
-(global-set-key [(f5)] 'describe-char)
-(global-set-key [(f6)] 'eshell)
-(global-set-key [(f7)] 'R)
-(global-set-key [(f8)] 'imaxima)
-
-(global-set-key [(f11)] 'color-theme-standard)
-(global-set-key [(f12)] 'color-theme-subtle-hacker)
-
-;;Ergoemacs Keybindings
-(global-unset-key (kbd "M-j")) ; indent-new-comment-line
-(global-unset-key (kbd "M-l")) ; downcase-word
-(global-unset-key (kbd "M-i")) ; tab-to-tab-stop
-(global-unset-key (kbd "M-k")) ; kill-sentence
-(global-unset-key (kbd "M-u")) ; upcase-word
-(global-set-key (kbd "M-j") 'backward-char)
-(global-set-key (kbd "M-l") 'forward-char)
-(global-set-key (kbd "M-i") 'previous-line)
-(global-set-key (kbd "M-k") 'next-line)
-(global-set-key (kbd "M-u") 'backward-word)
-(global-set-key (kbd "M-o") 'forward-word) ; was (prefix)
-(global-set-key (kbd "M-s") 'move-cursor-next-pane)
-(global-set-key (kbd "M-S") 'move-cursor-previous-pane)
 #+end_src
 
 ** Final Custom elements
@@ -603,26 +501,9 @@ Sometimes useful for getting help on R or Emacs.
 (global-set-key (kbd "C-x C-l") 'ibuffer)
 (autoload 'ibuffer "ibuffer" "List buffers." t)
 
-;; ido
-(require 'ido)
-(ido-mode t)
-
-;; wdired
-;(autoload 'wdired-change-to-wdired-mode "wdired")
-(add-hook 'dired-load-hook
-          '(lambda ()
-             (define-key dired-mode-map "r" 'wdired-change-to-wdired-mode)
-             (define-key dired-mode-map
-               [menu-bar immediate wdired-change-to-wdired-mode]
-               '("Edit File Names" . wdired-change-to-wdired-mode))))
-
-;;Do not show welcome message
-(setq inhibit-startup-message t)
-;;Do not auto generate backup files
-(setq make-backup-files nil)
-(setq delete-auto-save-files t)
-;;Highlight
-(global-font-lock-mode t)
+;; ecb
+(require 'cedet)
+;;(require 'ecb)
 
 ;; some configuration about mac window mode
 (when (eq window-system 'ns)
@@ -636,11 +517,9 @@ Sometimes useful for getting help on R or Emacs.
   (set-frame-font "Menlo-24")
   (set-fontset-font (frame-parameter nil 'font)
 		    'han '("STHeiti" . "unicode-bmp"))
-  (tool-bar-mode -1)
   (toggle-scroll-bar -1)
 
   (global-set-key (kbd "C-h h") 'ns-do-hide-emacs)
-  (server-start)
 )
   
   ;; custom variables kludge. Why can't I get these to work via setq?
