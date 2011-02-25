@@ -483,7 +483,7 @@ Sometimes useful for getting help on R or Emacs.
 (setq imaxima-use-maxima-mode-flag t)
 #+end_src
 
-** Final Custom elements
+** Custom elements
 #+srcname: final-custom
 #+begin_src emacs-lisp
   ;; Line-spacing tweak (Optimized for PragmataPro)
@@ -493,18 +493,15 @@ Sometimes useful for getting help on R or Emacs.
   (setq-default indicate-empty-lines nil)
   
   ;; Base dir
-  (cd "~/")
-  
-  ;; ecb
-  (setq stack-trace-on-error nil)
-  (require 'cedet)
-  (require 'ecb)
+  (cd "~/")  
   
   (setq locale-coding-system 'utf-8)
   (set-terminal-coding-system 'utf-8)
   (set-keyboard-coding-system 'utf-8)
   (set-selection-coding-system 'utf-8)
   (prefer-coding-system 'utf-8)
+  
+  (display-time)
 #+end_src
    
    
@@ -512,3 +509,18 @@ Sometimes useful for getting help on R or Emacs.
    
    
    
+
+** ECB
+#+source: ecb-init
+#+begin_src emacs-lisp
+  (when (eq window-system 'ns)
+    ;; window manager
+    ;(require 'winring)
+    ;(winring-initialize)
+    ;; ecb
+    (setq stack-trace-on-error nil)
+    (require 'cedet)
+    (require 'ecb)
+    (ecb-activate)
+  )    
+#+end_src
