@@ -12,6 +12,12 @@ Key Bindings.
 (global-set-key (kbd "C-M-h") 'backward-kill-word)
 #+end_src
 
+** Goto last change
+#+source: goto-last-change
+#+begin_src emacs-lisp
+  (require 'goto-last-change)
+  (global-set-key (kbd "C-x C-\\") 'goto-last-change)
+#+end_src
 ** Align your code in a pretty way.
 #+begin_src emacs-lisp 
 (global-set-key (kbd "C-x \\") 'align-regexp)
@@ -81,9 +87,12 @@ Key Bindings.
 
 ** Window switching. (C-x o goes to the next window)
 #+begin_src emacs-lisp 
-(windmove-default-keybindings) ;; Shift+direction
-(global-set-key (kbd "C-x O") (lambda () (interactive) (other-window -1))) ;; back one
-(global-set-key (kbd "C-x C-o") (lambda () (interactive) (other-window 2))) ;; forward two
+  (windmove-default-keybindings 'alt) ;; Shift+direction
+  (global-set-key (kbd "C-x O") (lambda () (interactive) (other-window -1))) ;; back one
+  (global-set-key (kbd "C-x C-o") (lambda () (interactive) (other-window 2))) ;; forward two
+  (global-set-key (kbd "C-`") 'other-window)
+  (global-set-key [(ctrl alt left)]  'bs-cycle-previous)
+  (global-set-key [(ctrl alt right)]  'bs-cycle-next)
 #+end_src
 
 ** Indentation help
@@ -146,27 +155,27 @@ Key Bindings.
 
 ** Applications
 #+begin_src emacs-lisp 
-  
   (global-set-key (kbd "C-c j") (lambda () (interactive) (switch-or-start 'jabber-connect "*-jabber-*")))
   (global-set-key (kbd "C-c i") (lambda () (interactive) (switch-or-start (lambda ()
-                                                                       (rcirc-connect "irc.freenode.net"))
-                                                                     "*irc.freenode.net*")))
+                                                                            (rcirc-connect "irc.freenode.net"))
+                                                                          "*irc.freenode.net*")))
   (global-set-key (kbd "C-c J") 'jabber-send-presence)
   (global-set-key (kbd "C-c M-j") 'jabber-disconnect)
   (global-set-key (kbd "C-x g") 'magit-status)
-
+  
   (global-set-key [(f1)] 'vi-mode)
   (global-set-key [(f2)] 'gnus)
   (global-set-key [(f3)] 'calendar)
   (global-set-key [(f4)] 'calculator)
-;;  (global-set-key [(f5)] 'describe-char)
+  ;;  (global-set-key [(f5)] 'describe-char)
   (global-set-key [(f5)] 'ansi-term)
   (global-set-key [(f6)] 'eshell)
   (global-set-key [(f7)] 'ecb-activate)
   (global-set-key [(f8)] 'imaxima)
-
+  
   (global-set-key [(f11)] 'color-theme-standard)
   (global-set-key [(f12)] 'color-theme-subtle-hacker)
+  ;;(define-key dired-mode-map "o" 'dired-open-mac)
 #+end_src
 
 ** This is a little hacky since VC doesn't support git add internally
@@ -272,11 +281,20 @@ When windows get out of order, you can rotate them.
   (global-set-key (kbd "C-c m") 'rotate-windows)
 #+end_src
 
+** Set Transparency
+#+source: set-transparency
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-?") 'transparency-set-value)
+  ;; the two below let for smooth transparency control
+  (global-set-key (kbd "C->") 'transparency-increase)
+  (global-set-key (kbd "C-<") 'transparency-decrease)
+#+end_src
+
 ** CUA mode for rectangle editing
 Sometimes very useful (but we don't use the core cua keys.)
 
 #+source: cua-rectangle
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
   (setq cua-enable-cua-keys nil)
   (cua-mode)
 
