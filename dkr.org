@@ -288,29 +288,35 @@ buffers in specific modes (ess, etc) are saved.
 #+srcname: iBuffer-custom
 #+begin_src emacs-lisp 
   (setq ibuffer-saved-filter-groups
-      '(("home"
-	 ("emacs-config" (or (filename . ".emacs.d")
-			     (filename . "emacs-config")))
-	 ("Org" (or (mode . org-mode)
-		    (filename . "OrgMode")))
-	 ("Web Dev" (or (mode . html-mode)
-			(mode . css-mode)))
-	 ("Magit" (name . "\*magit"))
-	 ("ESS" (mode . ess-mode))
+      '(("default"
+         ("Emacs Config" (or (filename . ".emacs.d")
+                             (filename . "emacs-config")))
+         ("Org" (or (mode . org-mode)
+                    (filename . "OrgMode")))
+         ("Web Dev" (or (mode . html-mode)
+                        (mode . css-mode)))
+         ("Magit" (name . "\*magit"))
+         ("ESS" (mode . ess-mode))
          ("LaTeX" (mode . latex-mode))
-	 ("Help" (or (name . "\*Help\*")
-		     (name . "\*Apropos\*")
-		     (name . "\*info\*"))))))
-
-        (add-hook 'ibuffer-mode-hook 
-	             '(lambda ()
-	             (ibuffer-switch-to-saved-filter-groups "home")))
-       (setq ibuffer-show-empty-filter-groups nil)                     
-       (setq ibuffer-expert t)
-       (add-hook 'ibuffer-mode-hook 
-       '(lambda ()
-       (ibuffer-auto-mode 1)
-       (ibuffer-switch-to-saved-filter-groups "home")))
+         ("Console" (or (mode . inferior-ess-mode)
+                        (mode . inferior-maxima-mode)
+                        (mode . eshell-mode)
+                        (mode . term-mode)))
+         ("Log" (name . ".*[lL]og.*"))
+         ("Customization" (name . "\*Custom.*\*"))
+         ("Help" (or (name . "\*[hH]elp.*\*")
+                     (name . "\*Apropos\*")
+                     (name . "\*info\*"))))))
+      
+  (add-hook 'ibuffer-mode-hook 
+            '(lambda ()
+               (ibuffer-switch-to-saved-filter-groups "default")))
+  (setq ibuffer-show-empty-filter-groups nil)                     
+  (setq ibuffer-expert t)
+  (add-hook 'ibuffer-mode-hook 
+            '(lambda ()
+               (ibuffer-auto-mode 1)
+               (ibuffer-switch-to-saved-filter-groups "home")))
 #+end_src
 
 ** Local Org-mode Settings
