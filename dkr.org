@@ -499,16 +499,17 @@ Sometimes useful for getting help on R or Emacs.
 ** ECB
 #+source: ecb-init
 #+begin_src emacs-lisp
+  (defun ecb-hide-ecb-windows-hook()
+    "Activate the eshell when ECB is activated. See `ecb-eshell-auto-activate'."
+    (ecb-toggle-ecb-windows -1)
+    (split-window-horizontally)
+    )
   (when (eq window-system 'ns)
-    ;; window manager
-    ;(require 'winring)
-    ;(winring-initialize)
-    ;; ecb
     (setq stack-trace-on-error nil)
     (require 'cedet)
     (require 'ecb)
-    ;(ecb-activate)
-  )    
+    (add-hook 'ecb-activate-hook 'ecb-hide-ecb-windows-hook)
+    )
 #+end_src
 
 ** Custom elements
