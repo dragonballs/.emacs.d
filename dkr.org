@@ -186,8 +186,7 @@ buffers in specific modes (ess, etc) are saved.
 #+source: cleanup-buffer-when
 #+begin_src emacs-lisp
   (setq cleanup-buffer-modes 
-        '(haskell-mode emacs-lisp-mode lisp-mode scheme-mode
-                       ess-mode erlang-mode clojure-mode ruby-mode))  
+        '(clojure-mode ruby-mode))  
 #+end_src
 
 ** Local LaTeX settings
@@ -501,7 +500,7 @@ Sometimes useful for getting help on R or Emacs.
 #+begin_src emacs-lisp
   (defun ecb-hide-ecb-windows-hook()
     "Activate the eshell when ECB is activated. See `ecb-eshell-auto-activate'."
-    (ecb-toggle-ecb-windows -1)
+    ;(ecb-toggle-ecb-windows -1)
     (split-window-horizontally)
     )
   (when (eq window-system 'ns)
