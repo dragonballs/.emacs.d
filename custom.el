@@ -64,6 +64,7 @@
  '(org-completion-use-ido t)
  '(org-default-notes-file "~/Dropbox/Documents/ORG/notes.org")
  '(org-directory "~/Dropbox/Documents/ORG")
+ '(package-archives (quote (("original" . "http://tromey.com/elpa/") ("gnu" . "http://elpa.gnu.org/packages/") ("technomancy" . "http://repo.technomancy.us/emacs/") ("kjhealy" . "http://kieranhealy.org/packages/"))))
  '(remember-data-file "~/Dropbox/Documents/ORG/notes.org")
  '(scroll-bar-mode nil)
  '(scroll-preserve-screen-position nil)
