@@ -45,6 +45,12 @@ How this works:
  with =C-l=.  For example, =C-a C-d= to detach will now be =C-l C-a C-l C-d=.
   Yes this is cumbersome.
 
+** Load MATLAB
+#+source: matlab-mode
+#+begin_src emacs-lisp
+  (require 'matlab)
+#+end_src
+
 ** Define Rnw-mode and make LaTeX aware of it. 
 #+srcname: misc-r
 #+begin_src emacs-lisp

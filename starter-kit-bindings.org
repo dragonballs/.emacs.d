@@ -40,11 +40,6 @@ Key Bindings.
 (global-set-key (kbd "C-c n") 'cleanup-buffer)
 #+end_src
 
-** Turn on the menu bar for exploring new modes
-#+begin_src emacs-lisp :tangle no
-(global-set-key [f1] 'menu-bar-mode)
-#+end_src
-
 ** Font size
 #+begin_src emacs-lisp 
 (define-key global-map (kbd "C-=") 'text-scale-increase)
@@ -100,21 +95,6 @@ Key Bindings.
 (global-set-key (kbd "C-x ^") 'join-line)
 #+end_src
 
-** Start eshell or switch to it if it's active.
-#+begin_src emacs-lisp :tangle no
-(global-set-key (kbd "C-x m") 'eshell)
-#+end_src
-
-** Start a new eshell even if one is active.
-#+begin_src emacs-lisp :tangle no
-(global-set-key (kbd "C-x M") (lambda () (interactive) (eshell t)))
-#+end_src
-
-** Start a regular shell if you prefer that.
-#+begin_src emacs-lisp 
-(global-set-key (kbd "C-x M-m") 'shell)
-#+end_src
-
 ** Smex replaces M-x
     Smex replaces M-x, and is built on top of ido-mode. See
     http://github.com/nonsequitur/smex or
@@ -162,10 +142,13 @@ Key Bindings.
   (global-set-key (kbd "C-c J") 'jabber-send-presence)
   (global-set-key (kbd "C-c M-j") 'jabber-disconnect)
   (global-set-key (kbd "C-x g") 'magit-status)
+
+  (global-set-key (kbd "C-c r") 'org-capture)
+  (global-set-key (kbd "C-c R") 'org-capture-goto-last-stored)
   
-  (global-set-key [(f1)] 'vi-mode)
-  (global-set-key [(f2)] 'gnus)
-  (global-set-key [(f3)] 'calendar)
+  (global-set-key [(f1)] 'org-agenda)
+  (global-set-key [(f2)] 'calendar)
+  (global-set-key [(f3)] 'gnus)
   (global-set-key [(f4)] 'calculator)
   ;;  (global-set-key [(f5)] 'describe-char)
   (global-set-key [(f5)] 'ansi-term)
@@ -279,6 +262,12 @@ When windows get out of order, you can rotate them.
        (setq i (1+ i)))))))
 
   (global-set-key (kbd "C-c m") 'rotate-windows)
+#+end_src
+
+** Activate Ibuffer
+#+source: activate-ibuffer
+#+begin_src emacs-lisp
+  (global-set-key (kbd "A-SPC") 'ibuffer)
 #+end_src
 
 ** Set Transparency

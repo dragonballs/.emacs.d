@@ -250,7 +250,7 @@ buffers in specific modes (ess, etc) are saved.
     Run the vc shellscript before running xelatex with C-c c (instead of
     C-c C-c for regular compile)
 #+srcname: vc-command
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
     (fset 'run-vc-then-xelatex
     [?\M-! ?v ?c return ?\C-c ?\C-c return])
     (global-set-key (kbd "C-c c") 'run-vc-then-xelatex);; Run the VC command before running xelatex
@@ -290,19 +290,27 @@ buffers in specific modes (ess, etc) are saved.
       '(("default"
          ("Emacs Config" (or (filename . ".emacs.d")
                              (filename . "emacs-config")))
+         ("Remember" (or (name . "CAPTURE-.*.org")
+                         (name . "NOTES-.*.org")))
          ("Org" (or (mode . org-mode)
                     (filename . "OrgMode")))
+         ("ESS" (or (mode . ess-mode)
+                    (mode . matlab-mode)))
+         ("Python" (mode . python-mode))
+         ("Script" (mode . sh-mode))
+         ("Emacs Lisp" (or (mode . emacs-lisp-mode)
+                           (mode . lisp-interaction-mode)))
+         ("LaTeX" (mode . latex-mode))
          ("Web Dev" (or (mode . html-mode)
                         (mode . css-mode)))
          ("Magit" (name . "\*magit"))
-         ("ESS" (mode . ess-mode))
-         ("LaTeX" (mode . latex-mode))
+         ("Customization" (name . "\*Custom.*\*"))
          ("Console" (or (mode . inferior-ess-mode)
                         (mode . inferior-maxima-mode)
+                        (mode . matlab-shell-mode)
                         (mode . eshell-mode)
                         (mode . term-mode)))
          ("Log" (name . ".*[lL]og.*"))
-         ("Customization" (name . "\*Custom.*\*"))
          ("Help" (or (name . "\*[hH]elp.*\*")
                      (name . "\*Apropos\*")
                      (name . "\*info\*"))))))
@@ -498,17 +506,27 @@ Sometimes useful for getting help on R or Emacs.
 ** ECB
 #+source: ecb-init
 #+begin_src emacs-lisp
-  (defun ecb-hide-ecb-windows-hook()
+  (defun ecb-split-windows-hook()
     "Activate the eshell when ECB is activated. See `ecb-eshell-auto-activate'."
-    ;(ecb-toggle-ecb-windows -1)
+                                          ;(ecb-toggle-ecb-windows -1)
     (split-window-horizontally)
+    (winring-initialize)
     )
-  (when (eq window-system 'ns)
-    (setq stack-trace-on-error nil)
-    (require 'cedet)
-    (require 'ecb)
-    (add-hook 'ecb-activate-hook 'ecb-hide-ecb-windows-hook)
-    )
+  (setq stack-trace-on-error nil)
+  (require 'cedet)
+  (require 'ecb)
+  (add-hook 'ecb-activate-hook 'ecb-split-windows-hook)
+  
+  (require 'winring)
+  (ecb-winman-winring-enable-support)
+#+end_src
+
+** Remember
+#+source: remember-setup
+#+begin_src emacs-lisp :tangle no
+  (setq remember-annotation-functions '(org-remember-annotation))
+  (setq remember-handler-functions '(org-remember-handler))
+  (add-hook 'remember-mode-hook 'org-remember-apply-template)
 #+end_src
 
 ** Custom elements
@@ -519,9 +537,6 @@ Sometimes useful for getting help on R or Emacs.
   
   ;; minimize fringe
   (setq-default indicate-empty-lines nil)
-  
-  ;; Base dir
-  (cd "~/")  
   
   (setq locale-coding-system 'utf-8)
   (set-terminal-coding-system 'utf-8)
