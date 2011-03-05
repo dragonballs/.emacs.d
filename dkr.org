@@ -35,8 +35,6 @@ You will also need to change the values for the location of bibtex
     ;;(when (featurep 'aquamacs) (aquamacs-toggle-full-frame))
   
     (global-set-key (kbd "C-h h") 'ns-do-hide-emacs)
-    (global-set-key [(ctrl left)] 'backward-word)
-    (global-set-key [(ctrl right)] 'forward-word)
   )
 #+end_src
 *** Window size
@@ -147,16 +145,6 @@ Internal to emacs; also seems not to work on OS X.
 #+srcname: local-windmove
 #+begin_src emacs-lisp
 (setq windmove-wrap-around t)
-#+end_src
-
-*** Resizing inside the frame
-#+srcname: resize-splits
-#+begin_src emacs-lisp
-  ;; resizing 'windows' (i.e., inside the frame)
-  (global-set-key (kbd "S-C-<left>") 'shrink-window-horizontally)
-  (global-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)
-  (global-set-key (kbd "S-C-<down>") 'shrink-window)
-  (global-set-key (kbd "S-C-<up>") 'enlarge-window)  
 #+end_src
 
 *** Mac Key mode
@@ -503,6 +491,11 @@ Sometimes useful for getting help on R or Emacs.
   ;(setq imaxima-use-maxima-mode-flag t)
 #+end_src
 
+** Python
+#+srcname: ipython-setup
+#+begin_src emacs-lisp
+(python-use-ipython "/usr/local/bin/ipython" '("-colors" "LightBG" "-nobanner"))
+#+end_src
 ** ECB
 #+source: ecb-init
 #+begin_src emacs-lisp

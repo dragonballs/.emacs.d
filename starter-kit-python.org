@@ -28,7 +28,7 @@ supplied by the Python distribution itself.
 
 In your personal configuration, add something like this to use IPython:
 #+begin_src emacs-lisp :tangle no
-(python-use-ipython "/usr/local/bin/ipython" '("-colors" "LightBG" "-nobanner"))
+(python-use-ipython "/usr/local/bin/ipython" '("-colors" "NoColor" "-nobanner"))
 #+end_src
 
 ** Use Cython mode

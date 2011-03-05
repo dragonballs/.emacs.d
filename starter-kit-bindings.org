@@ -80,14 +80,31 @@ Key Bindings.
   (browse-kill-ring-default-keybindings))
 #+end_src
 
+** Move by word
+#+source: move-by-word
+#+begin_src emacs-lisp
+  (global-set-key [(ctrl left)] 'backward-word)
+  (global-set-key [(ctrl right)] 'forward-word)
+#+end_src
+
+** Resizing inside the frame
+#+srcname: resize-splits
+#+begin_src emacs-lisp
+  ;; resizing 'windows' (i.e., inside the frame)
+  (global-set-key (kbd "S-A-<left>") 'shrink-window-horizontally)
+  (global-set-key (kbd "S-A-<right>") 'enlarge-window-horizontally)
+  (global-set-key (kbd "S-A-<down>") 'shrink-window)
+  (global-set-key (kbd "S-A-<up>") 'enlarge-window)  
+#+end_src
+
 ** Window switching. (C-x o goes to the next window)
 #+begin_src emacs-lisp 
-  (windmove-default-keybindings 'alt) ;; Shift+direction
+  (windmove-default-keybindings 'meta) ;; Shift+direction
   (global-set-key (kbd "C-x O") (lambda () (interactive) (other-window -1))) ;; back one
   (global-set-key (kbd "C-x C-o") (lambda () (interactive) (other-window 2))) ;; forward two
   (global-set-key (kbd "C-`") 'other-window)
-  (global-set-key [(ctrl alt left)]  'bs-cycle-previous)
-  (global-set-key [(ctrl alt right)]  'bs-cycle-next)
+;  (global-set-key [(ctrl alt left)]  'bs-cycle-previous)
+;  (global-set-key [(ctrl alt right)]  'bs-cycle-next)
 #+end_src
 
 ** Indentation help
@@ -104,9 +121,9 @@ Key Bindings.
   (require 'smex)
   (smex-initialize)  
   (global-set-key (kbd "M-x") 'smex)
-  (global-set-key (kbd "C-x C-m") 'smex) ;; supersedes binding in starter-kit-bindings.org
+  ;(global-set-key (kbd "C-x C-m") 'smex) ;; supersedes binding in starter-kit-bindings.org
   (global-set-key (kbd "M-X") 'smex-major-mode-commands)
-  (global-set-key (kbd "C-x C-M") 'smex-major-mode-commands)
+  ;(global-set-key (kbd "C-x C-M") 'smex-major-mode-commands)
   ;; This is your old M-x.
   (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
   (setq smex-show-unbound-commands t)
@@ -114,7 +131,7 @@ Key Bindings.
 #+end_src
 
 ** If you want to be able to M-x without meta
-#+begin_src emacs-lisp 
+#+begin_src emacs-lisp :tangle no 
 (global-set-key (kbd "C-x C-m") 'smex)
 #+end_src
     
@@ -133,16 +150,23 @@ Key Bindings.
 (global-set-key (kbd "C-c e") 'eval-and-replace)
 #+end_src
 
+** Multi Term
+#+source: multi-term-setup
+#+begin_src emacs-lisp
+  (require 'multi-term)
+#+end_src
+
 ** Applications
 #+begin_src emacs-lisp 
   (global-set-key (kbd "C-c j") (lambda () (interactive) (switch-or-start 'jabber-connect "*-jabber-*")))
   (global-set-key (kbd "C-c i") (lambda () (interactive) (switch-or-start (lambda ()
                                                                             (rcirc-connect "irc.freenode.net"))
                                                                           "*irc.freenode.net*")))
+  
   (global-set-key (kbd "C-c J") 'jabber-send-presence)
   (global-set-key (kbd "C-c M-j") 'jabber-disconnect)
   (global-set-key (kbd "C-x g") 'magit-status)
-
+  
   (global-set-key (kbd "C-c r") 'org-capture)
   (global-set-key (kbd "C-c R") 'org-capture-goto-last-stored)
   
@@ -151,7 +175,7 @@ Key Bindings.
   (global-set-key [(f3)] 'gnus)
   (global-set-key [(f4)] 'calculator)
   ;;  (global-set-key [(f5)] 'describe-char)
-  (global-set-key [(f5)] 'ansi-term)
+  (global-set-key [(f5)] 'multi-term)
   (global-set-key [(f6)] 'eshell)
   (global-set-key [(f7)] 'ecb-activate)
   (global-set-key [(f8)] 'imaxima)
