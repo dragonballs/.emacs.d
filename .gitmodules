@@ -7,3 +7,6 @@
 [submodule "src/org"]
 	path = src/org
 	url = http://orgmode.org/org-mode.git
+[submodule "src/anything"]
+	path = src/anything
+	url = git://repo.or.cz/anything-config.git

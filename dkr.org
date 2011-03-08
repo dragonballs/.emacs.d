@@ -299,9 +299,13 @@ buffers in specific modes (ess, etc) are saved.
                         (mode . eshell-mode)
                         (mode . term-mode)))
          ("Log" (name . ".*[lL]og.*"))
+         ("Anything" (or (mode . anything-mode)
+                         (name . "\*anything.*\*")))
          ("Help" (or (name . "\*[hH]elp.*\*")
                      (name . "\*Apropos\*")
-                     (name . "\*info\*"))))))
+                     (name . "\*info\*")
+                     (mode . help-mode)
+                     (mode . Info-mode))))))
       
   (add-hook 'ibuffer-mode-hook 
             '(lambda ()
@@ -491,11 +495,6 @@ Sometimes useful for getting help on R or Emacs.
   ;(setq imaxima-use-maxima-mode-flag t)
 #+end_src
 
-** Python
-#+srcname: ipython-setup
-#+begin_src emacs-lisp
-(python-use-ipython "/usr/local/bin/ipython" '("-colors" "LightBG" "-nobanner"))
-#+end_src
 ** ECB
 #+source: ecb-init
 #+begin_src emacs-lisp
@@ -512,6 +511,21 @@ Sometimes useful for getting help on R or Emacs.
   
   (require 'winring)
   (ecb-winman-winring-enable-support)
+#+end_src
+
+** Anything
+#+source: anything-config
+#+begin_src emacs-lisp
+  (require 'anything-config)
+
+  (require 'anything-ipython)
+  (add-hook 'python-mode-hook #'(lambda ()
+                                  (define-key py-mode-map (kbd "M-<tab>") 'anything-ipython-complete)))
+  (add-hook 'py-shell-hook #'(lambda ()
+                                    (define-key py-shell-map (kbd "M-<tab>") 'anything-ipython-complete)))
+  (when (require 'anything-show-completion nil t)
+     (use-anything-show-completion 'anything-ipython-complete
+                                   '(length initial-pattern)))
 #+end_src
 
 ** Remember

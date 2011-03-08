@@ -48,7 +48,6 @@ Mardown and Pandoc, as well as spellchecking and line-wrapping.
     (interactive)
     (let ((fill-column (point-max)))
     (fill-paragraph nil)))
-    (global-set-key (kbd "<f6>") 'unfill-paragraph)
 
     ;; smooth-scrolling package in src/
     (require 'smooth-scrolling)

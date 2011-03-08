@@ -167,6 +167,8 @@ Key Bindings.
   (global-set-key (kbd "C-c M-j") 'jabber-disconnect)
   (global-set-key (kbd "C-x g") 'magit-status)
   
+  (global-set-key (kbd "C-x c") 'describe-char)
+  
   (global-set-key (kbd "C-c r") 'org-capture)
   (global-set-key (kbd "C-c R") 'org-capture-goto-last-stored)
   
@@ -175,10 +177,14 @@ Key Bindings.
   (global-set-key [(f3)] 'gnus)
   (global-set-key [(f4)] 'calculator)
   ;;  (global-set-key [(f5)] 'describe-char)
-  (global-set-key [(f5)] 'multi-term)
-  (global-set-key [(f6)] 'eshell)
-  (global-set-key [(f7)] 'ecb-activate)
-  (global-set-key [(f8)] 'imaxima)
+  (global-set-key [(f5)] 'eshell)
+  (global-set-key [(f6)] 'multi-term-next)
+  (global-set-key [(shift f6)] 'multi-term)
+  (global-set-key [(f7)] 'py-shell)
+  (global-set-key [(f8)] 'my-ess-activate-R)
+  (global-set-key [(shift f8)] 'R)
+  (global-set-key [(f9)] 'maxima)
+  (global-set-key [(shift f9)] 'imaxima)
   
   (global-set-key [(f11)] 'color-theme-standard)
   (global-set-key [(f12)] 'color-theme-subtle-hacker)
@@ -288,10 +294,11 @@ When windows get out of order, you can rotate them.
   (global-set-key (kbd "C-c m") 'rotate-windows)
 #+end_src
 
-** Activate Ibuffer
-#+source: activate-ibuffer
+** Activate Ibuffer and Anything
+#+source: activate-ibuffer-anything
 #+begin_src emacs-lisp
   (global-set-key (kbd "A-SPC") 'ibuffer)
+  (global-set-key (kbd "A-x") 'anything)
 #+end_src
 
 ** Set Transparency

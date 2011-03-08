@@ -193,6 +193,16 @@ Nguyen]] and allows for cachSweave() compilation with M-n w.
 (define-key noweb-minor-mode-map "\M-nw" 'ess-swv-weave2)
 
 #+end_src
+** Activate R
+#+source: activate-r
+#+begin_src emacs-lisp
+  (defun my-ess-activate-R ()
+      (interactive)
+      (if (not (member "*R*" (mapcar (function buffer-name) (buffer-list))))
+          (R)        
+        (switch-to-buffer "*R*")))
+#+end_src
+
 ** Make shift-enter to a lot in ESS.
 #+srcname: ess-custom
 #+begin_src emacs-lisp
@@ -211,7 +221,6 @@ Nguyen]] and allows for cachSweave() compilation with M-n w.
   ;; horizontally. 
   (setq ess-ask-for-ess-directory nil)
   (setq ess-local-process-name "R")
-  (setq ansi-color-for-comint-mode 'filter)
   (setq comint-scroll-to-bottom-on-input t)
   (setq comint-scroll-to-bottom-on-output t)
   (setq comint-move-point-for-output t)
