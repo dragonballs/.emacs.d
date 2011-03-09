@@ -10,3 +10,6 @@
 [submodule "src/anything"]
 	path = src/anything
 	url = git://repo.or.cz/anything-config.git
+[submodule "src/sbt"]
+	path = src/sbt
+	url = https://github.com/RayRacine/scallap.git
