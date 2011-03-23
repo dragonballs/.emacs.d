@@ -22,7 +22,6 @@ session*
 tramp
 \#*
 ## exported files
-*el
 starter-kit*html
 doc
 eshell/lastdir
