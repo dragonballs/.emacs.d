@@ -7,6 +7,22 @@ This is part of the [[file:starter-kit.org][Emacs Starter Kit]].
 
 Key Bindings.
 
+** Basic
+#+begin_src emacs-lisp
+  (when (eq window-system 'ns)
+    (global-set-key (kbd "C-b") 'backward-word)
+    (global-set-key (kbd "C-f") 'forward-word)
+    (global-set-key (kbd "M-b") 'backward-char)
+    (global-set-key (kbd "M-f") 'forward-char)
+  )
+#+end_src
+
+** Kill this buffer
+#+source: kill-this-buffer
+#+begin_src emacs-lisp
+  (global-set-key (kbd "M-k") 'kill-this-buffer)
+#+end_src
+
 ** You know, like Readline.
 #+begin_src emacs-lisp :tangle no
 (global-set-key (kbd "C-M-h") 'backward-kill-word)
@@ -28,6 +44,12 @@ Key Bindings.
 ;; comment/uncomment the current line
 (global-set-key (kbd "C-;") 'comment-or-uncomment-current-line)
 (global-set-key (kbd "C-:") 'comment-or-uncomment-region)
+#+end_src
+
+** Indent Buffer
+#+source: indent-buffer
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-A-l") 'indent-buffer)
 #+end_src
 
 ** Completion that uses many different methods to find options.
@@ -172,6 +194,9 @@ Key Bindings.
   (global-set-key (kbd "C-c r") 'org-capture)
   (global-set-key (kbd "C-c R") 'org-capture-goto-last-stored)
   
+  (global-set-key (kbd "A-n") 'winring-new-configuration)
+  (global-set-key (kbd "A-`") 'winring-next-configuration)
+  
   (global-set-key [(f1)] 'org-agenda)
   (global-set-key [(f2)] 'calendar)
   (global-set-key [(f3)] 'gnus)
@@ -185,6 +210,7 @@ Key Bindings.
   (global-set-key [(shift f8)] 'R)
   (global-set-key [(f9)] 'maxima)
   (global-set-key [(shift f9)] 'imaxima)
+  (global-set-key [(f10)] 'sql-mysql)
   
   (global-set-key [(f11)] 'color-theme-standard)
   (global-set-key [(f12)] 'color-theme-subtle-hacker)

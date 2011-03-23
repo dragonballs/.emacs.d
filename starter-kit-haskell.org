@@ -24,3 +24,13 @@ Haskell mode hook
   (add-hook 'haskell-mode-hook 'run-coding-hook)
   (add-hook 'haskell-mode-hook 'pretty-lambdas-haskell)
 #+end_src
+
+* Scala
+#+source: scala-config
+#+begin_src emacs-lisp
+  (require 'scala-mode)
+  (require 'scala-mode-auto)
+  (add-hook 'scala-mode-hook
+            '(lambda ()
+             (yas/minor-mode-on)))
+#+end_src

@@ -18,13 +18,25 @@ supplied by the Python distribution itself.
 
 ** Facilitate the use of IPython
 #+begin_src emacs-lisp
-;  (setq py-python-command "python2.7")
   (require 'ipython)
 #+end_src
 
 In your personal configuration, add something like this to use IPython:
 #+begin_src emacs-lisp :tangle no
 (python-use-ipython "/usr/local/bin/ipython" '("-pylab" "-colors" "NoColor" "-nobanner"))
+#+end_src
+
+** Anything ipython
+#+begin_src emacs-lisp
+  (require 'anything-ipython)
+  (fset 'ipython-complete 'anything-ipython-complete)
+  ;  (add-hook 'python-mode-hook #'(lambda ()
+  ;                                  (define-key py-mode-map (kbd "M-<tab>") 'anything-ipython-complete)))
+  ;  (add-hook 'py-shell-hook #'(lambda ()
+  ;                                    (define-key py-shell-map (kbd "<tab>") 'anything-ipython-complete)))
+  (when (require 'anything-show-completion nil t)
+    (use-anything-show-completion 'anything-ipython-complete
+                                  '(length initial-pattern)))
 #+end_src
 
 ** Pymacs

@@ -285,6 +285,9 @@ buffers in specific modes (ess, etc) are saved.
          ("ESS" (or (mode . ess-mode)
                     (mode . matlab-mode)))
          ("Python" (mode . python-mode))
+         ("Java" (mode . java-mode))
+         ("Properties" (name . "*.properties"))
+         ("Scala" (mode . scala-mode))
          ("Script" (mode . sh-mode))
          ("Emacs Lisp" (or (mode . emacs-lisp-mode)
                            (mode . lisp-interaction-mode)))
@@ -297,7 +300,9 @@ buffers in specific modes (ess, etc) are saved.
                         (mode . inferior-maxima-mode)
                         (mode . matlab-shell-mode)
                         (mode . eshell-mode)
-                        (mode . term-mode)))
+                        (mode . term-mode)
+                        (mode . scala-mode-inf)
+                        (mode . comint-mode)))
          ("Log" (name . ".*[lL]og.*"))
          ("Anything" (or (mode . anything-mode)
                          (name . "\*anything.*\*")))
@@ -439,6 +444,26 @@ When in an org-mode buffer, bind TeX-insert-quote to =C-c "=.
             (add-hook 'org-export-latex-after-initial-vars-hook 'my-auto-tex-parameters)      
 #+end_src
 
+** Buffer list
+#+source: buffer-list-config
+#+begin_src emacs-lisp
+  (defun buffer-predicate (buffer)
+    (cond
+     ; for completions
+     ((string-equal "*Completions*" (buffer-name)) t)
+     ; for ibuffer
+     ((string-equal "*Ibuffer*" (buffer-name)) t)
+     ; for * buffers
+     ((string-prefix-p "*" (buffer-name buffer)) nil)
+     ; default
+     (t t)
+     )
+  )
+  (set-frame-parameter (selected-frame)
+                       'buffer-predicate
+                       'buffer-predicate)
+#+end_src
+
 ** Minimal mode
    A nice clutter-free appearance with a reduced-size modeline, no
    scroll bars, and no fringe indicators. 
@@ -498,35 +523,57 @@ Sometimes useful for getting help on R or Emacs.
 ** ECB
 #+source: ecb-init
 #+begin_src emacs-lisp
-  (defun ecb-split-windows-hook()
-    "Activate the eshell when ECB is activated. See `ecb-eshell-auto-activate'."
-                                          ;(ecb-toggle-ecb-windows -1)
-    (split-window-horizontally)
-    (winring-initialize)
-    )
+  (defun ecb-startup-hook()
+      "Activate the eshell when ECB is activated. See `ecb-eshell-auto-activate'."
+      (split-window-horizontally)
+      (ecb-winman-winring-enable-support)
+      (winring-initialize)
+      (remove-hook 'ecb-activate-hook 'ecb-startup-hook)
+      )
   (setq stack-trace-on-error nil)
   (require 'cedet)
   (require 'ecb)
-  (add-hook 'ecb-activate-hook 'ecb-split-windows-hook)
+  (add-hook 'ecb-activate-hook 'ecb-startup-hook)
   
-  (require 'winring)
-  (ecb-winman-winring-enable-support)
+  (defun toggle-ecb ()
+    "Toggles ECB"
+    (interactive)
+    (if (and (boundp 'ecb-activated-window-configuration)
+             ecb-activated-window-configuration)
+        (ecb-deactivate)
+      (ecb-activate)))
+  
 #+end_src
 
 ** Anything
 #+source: anything-config
 #+begin_src emacs-lisp
   (require 'anything-config)
-
-  (require 'anything-ipython)
-  (add-hook 'python-mode-hook #'(lambda ()
-                                  (define-key py-mode-map (kbd "M-<tab>") 'anything-ipython-complete)))
-  (add-hook 'py-shell-hook #'(lambda ()
-                                    (define-key py-shell-map (kbd "M-<tab>") 'anything-ipython-complete)))
-  (when (require 'anything-show-completion nil t)
-     (use-anything-show-completion 'anything-ipython-complete
-                                   '(length initial-pattern)))
+  (require 'anything-complete)
+;  (when (require 'anything-show-completion nil t)
+;    (use-anything-show-completion 'R
+;                                  '(length initial-pattern)))
 #+end_src
+
+** Icicles
+#+source: icicles-config
+#+begin_src emacs-lisp
+  (require 'icicles)
+#+end_src
+
+** Completion
+#+source: completion-ui-setup
+#+begin_src emacs-lisp
+  (require 'completion-ui)
+#+end_src
+
+#+begin_src emacs-lisp :tangle no
+  (defun my-dynamic-list-completions (completions &optional common-substring)
+    (ido-completing-read "Complete: " completions)
+    )
+  (fset 'comint-dynamic-list-completions 'my-dynamic-list-completions)
+#+end_src
+
 
 ** Remember
 #+source: remember-setup
@@ -554,4 +601,9 @@ Sometimes useful for getting help on R or Emacs.
   (display-time)
 
   (global-visual-line-mode 1)
+#+end_src
+
+** Server start
+#+begin_src emacs-lisp
+  (server-start)
 #+end_src
