@@ -276,6 +276,7 @@ buffers in specific modes (ess, etc) are saved.
 #+begin_src emacs-lisp 
   (setq ibuffer-saved-filter-groups
       '(("default"
+         ("Text" (mode . text-mode))
          ("Emacs Config" (or (filename . ".emacs.d")
                              (filename . "emacs-config")))
          ("Remember" (or (name . "CAPTURE-.*.org")
@@ -286,12 +287,17 @@ buffers in specific modes (ess, etc) are saved.
                     (mode . matlab-mode)))
          ("Python" (mode . python-mode))
          ("Java" (mode . java-mode))
+         ("SQL" (mode . sql-mode))
+         ("XML" (or (mode . xml-mode)
+                    (mode . nxml-mode)))
+         ("Hex" (mode . hexl-mode))
          ("Properties" (name . "*.properties"))
          ("Scala" (mode . scala-mode))
          ("Script" (mode . sh-mode))
          ("Emacs Lisp" (or (mode . emacs-lisp-mode)
                            (mode . lisp-interaction-mode)))
-         ("LaTeX" (mode . latex-mode))
+         ("LaTeX" (or (mode . latex-mode)
+                      (mode . bibtex-mode)))
          ("Web Dev" (or (mode . html-mode)
                         (mode . css-mode)))
          ("Magit" (name . "\*magit"))
@@ -302,6 +308,7 @@ buffers in specific modes (ess, etc) are saved.
                         (mode . eshell-mode)
                         (mode . term-mode)
                         (mode . scala-mode-inf)
+                        (mode . sql-interactive-mode)
                         (mode . comint-mode)))
          ("Log" (name . ".*[lL]og.*"))
          ("Anything" (or (mode . anything-mode)
@@ -322,6 +329,10 @@ buffers in specific modes (ess, etc) are saved.
                (ibuffer-auto-mode 1)
                (ibuffer-switch-to-saved-filter-groups "home")))
 #+end_src
+
+#+results: iBuffer-custom
+| lambda | nil | (ibuffer-auto-mode 1)                           | (ibuffer-switch-to-saved-filter-groups home) |
+| lambda | nil | (ibuffer-switch-to-saved-filter-groups default) |                                              |
 
 ** Local Org-mode Settings
 *** Local Org-mode Smart-quote binding
@@ -573,7 +584,6 @@ Sometimes useful for getting help on R or Emacs.
     )
   (fset 'comint-dynamic-list-completions 'my-dynamic-list-completions)
 #+end_src
-
 
 ** Remember
 #+source: remember-setup

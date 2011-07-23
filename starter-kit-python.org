@@ -41,7 +41,7 @@ In your personal configuration, add something like this to use IPython:
 
 ** Pymacs
 #+source: pymacs-setup
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (require 'pymacs)
   (pymacs-load "ropemacs" "rope-")
 #+end_src
