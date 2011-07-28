@@ -1,3 +1,5 @@
+(load "~/.emacs.d/src/cedet/common/cedet.el")
+(global-ede-mode 1)
 ;;; init.el --- Where all the magic begins
 ;;
 ;; Part of the Emacs Starter Kit
