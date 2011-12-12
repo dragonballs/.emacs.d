@@ -27,7 +27,7 @@ You will also need to change the values for the location of bibtex
     (setq mac-control-modifier 'meta)
     (setq mac-option-modifier 'alt)
   
-    (set-frame-font "Menlo-24")
+    (set-frame-font "Menlo-16")
     (set-fontset-font (frame-parameter nil 'font)
                       'han '("STHeiti" . "unicode-bmp"))
     (toggle-scroll-bar -1)
