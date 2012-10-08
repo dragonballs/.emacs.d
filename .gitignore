@@ -42,3 +42,5 @@ src/auctex-src/*elc
 /src/cedet-1.0/*/*-script
 /src/cedet-1.0/*/*/*-script
 /src/cedet
+/index.org
+/vc-git.awk

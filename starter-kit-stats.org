@@ -78,7 +78,8 @@ How this works:
 #+end_src
  
 ** R-object tooltips
- from: http://blogisticreflections.wordpress.com/2009/10/01/r-object-tooltips-in-ess/
+Taken from http://blogisticreflections.wordpress.com/2009/10/01/r-object-tooltips-in-ess/
+#+begin_quote 
  I have defined a function, ess-R-object-tooltip, that when
  invoked, will return a tooltip with some information about
  the object at point.  The information returned is
@@ -93,8 +94,8 @@ How this works:
  to call when the class is not mached in the alist.  By default,
  the str function is called, which is actually a fairly useful
  default for data.frame and function objects.
- 
- The last line of this file shows my default keybinding.
+#+end_quote
+
 
 #+srcname: r-object-tooltips
 #+begin_src emacs-lisp
@@ -254,3 +255,19 @@ Nguyen]] and allows for cachSweave() compilation with M-n w.
 #+end_src
 
 
+** ESS Tracebug: A debugger for your R code
+This is an emacs package for interactive debugging and error tracing
+in ESS. More details on [[http://code.google.com/p/ess-tracebug/][the ess-tracebug project]] can be found on its
+[[http://code.google.com/p/ess-tracebug/][Google Code page]].
+
+#+source: ess-tracebug
+#+begin_src emacs-lisp
+  (require 'ess-tracebug)
+  (add-hook 'ess-post-run-hook 'ess-tracebug t)
+  (define-key ess-mode-map "\M-]" 'next-error)
+  (define-key ess-mode-map "\M-[" 'previous-error)
+  (define-key inferior-ess-mode-map "\M-]" 'next-error-no-select)
+  (define-key inferior-ess-mode-map "\M-[" 'previous-error-no-select)
+  (define-key compilation-minor-mode-map [(?n)] 'next-error-no-select)
+  (define-key compilation-minor-mode-map [(?p)] 'previous-error-no-select)
+#+end_src
